@@ -1,0 +1,45 @@
+<!-- Botón Flotante Redondo -->
+<button class="chat-burbuja" (click)="toggleChat()">
+  @if (!isOpen()) {
+    💬
+  } @else {
+    ❌
+  }
+</button>
+
+<!-- Ventana del Chat Bot -->
+@if (isOpen()) {
+  <div class="chat-ventana">
+    <!-- Header del Chat -->
+    <div class="chat-header colorBreakRosa text-white">
+      <strong>Asistente Break Brasil 🇧🇷</strong>
+      <span class="chat-sub">Online</span>
+    </div>
+
+    <!-- Cuerpo con Mensajes Reales (Leyendo el Signal) -->
+    <div class="chat-cuerpo" #scrollMe>
+      <div class="mensaje ia">
+        <p>¡Hola! 👋 Soy tu asesor virtual de Break. ¿Tenés dudas sobre las salidas a Florianópolis, paradores, boliches o políticas? ¡Preguntame lo que quieras!</p>
+      </div>
+
+      @for (msg of chatService.mensajesSignal(); track $index) {
+        <div class="mensaje" [ngClass]="msg.emisor">
+          <p>{{ msg.texto }}</p>
+        </div>
+      }
+    </div>
+
+    <!-- Input de Texto Inferior -->
+    <div class="chat-input-area">
+      <input 
+        type="text" 
+        placeholder="Escribí tu consulta..." 
+        [ngModel]="mensajeTemporal()"
+        (ngModelChange)="mensajeTemporal.set($event)"
+        (keyup.enter)="enviar()"
+      />
+      <button class="colorBreakRosa text-white" (click)="enviar()">➤</button>
+    </div>
+  </div>
+}
+

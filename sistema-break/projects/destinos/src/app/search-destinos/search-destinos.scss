@@ -1,0 +1,36 @@
+.btn-whatsapp {
+  background-color: #25D366;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Espacio entre el logo y el texto */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 10px;
+}
+
+.btn-whatsapp:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-whatsapp:hover i {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.backgroundColorHead{
+    background-color: #6EC1E4;
+}
+
+.colorBreakRosa{
+    color:#F52D6E
+}
+
+.colorBreakCeleste{
+    color:#6EC1E4
+}

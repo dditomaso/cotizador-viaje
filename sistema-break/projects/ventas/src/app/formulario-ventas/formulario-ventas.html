@@ -1,0 +1,207 @@
+<p-card>
+    <form (submit)="onSubmit($event)">
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <label for="correo" class="block mb-2">Correo electrónico <span style="color: red;">*</span></label>
+                <input 
+                    type="email" 
+                    placeholder="correo@ejemplo.com" 
+                    [formField]="formBreak.correo" 
+                    class="w-full inputStyle" />
+
+                     @if (formBreak.correo().touched() && formBreak.correo().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.correo().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }
+                        </div>
+                    }
+            </div>
+            <div class="col-12 md:col-6">
+                <label for="nombre" class="block mb-2">Código de Reserva <span style="color: red;">*</span></label>
+                <input 
+                    type="text" 
+                    placeholder="ingresar solamente el número provisto po BREAK" 
+                    [formField]="formBreak.codigo" 
+                    class="w-full inputStyle" />
+                    @if (formBreak.codigo().touched() && formBreak.codigo().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.codigo().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }
+                        </div>
+                    }
+            </div>
+         </div>
+
+         <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <label for="nombre" class="block mb-2">Nombre <span style="color: red;">*</span></label>
+                <input 
+                    type="text" 
+                    placeholder="Nombres" 
+                    [formField]="formBreak.nombre" 
+                    class="w-full inputStyle" />
+                    @if (formBreak.nombre().touched() && formBreak.nombre().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.nombre().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }
+                        </div>
+                    }
+            </div>
+            <div class="col-12 md:col-6">
+                <label for="apellido" class="block mb-2">Apellido <span style="color: red;">*</span></label>
+                <input 
+                    type="text" 
+                    placeholder="Apellidos" 
+                    [formField]="formBreak.apellido" 
+                    class="w-full inputStyle" />
+                    @if (formBreak.apellido().touched() && formBreak.apellido().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.apellido().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }
+                        </div>
+                    }
+            </div>
+         </div>
+
+         <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <label for="sexo" class="block mb-2">Sexo <span style="color: red;">*</span></label>
+                <select [formField]="formBreak.sexo" class="w-full inputStyle" style="cursor: pointer;">
+                    <option value="">Seleccionar</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="O">Otro</option>
+                </select>
+                    @if (formBreak.sexo().touched() && formBreak.sexo().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.sexo().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }
+                        </div>
+                    }
+            </div>
+            <div class="col-12 md:col-6">
+                <label for="documento" class="block mb-2">Documento <span style="color: red;">*</span></label>
+                <input 
+                    type="text" 
+                    placeholder="Número de documento" 
+                    [formField]="formBreak.documento" 
+                    class="w-full inputStyle" />
+                    @if (formBreak.documento().touched() && formBreak.documento().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.documento().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }
+                        </div>
+                    }
+            </div>
+         </div>
+
+         <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <label for="fechaNacimiento" class="block mb-2">Fecha de Nacimiento <span style="color: red;">*</span></label>
+                <input 
+                    type="date" 
+                    placeholder="Colocar en formato dd/mm/aaaa" 
+                    [formField]="formBreak.fechaNacimiento" 
+                    class="w-full inputStyle"/>
+                    @if (formBreak.fechaNacimiento().touched() && formBreak.fechaNacimiento().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.fechaNacimiento().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }
+                        </div>
+                    }
+            </div>
+            <div class="col-12 md:col-6">
+                <label for="celular" class="block mb-2">Celular <span style="color: red;">*</span></label>
+                <input 
+                    type="text" 
+                    placeholder="Número de celular" 
+                    [formField]="formBreak.celular" 
+                    class="w-full inputStyle" />
+                    @if (formBreak.celular().touched() && formBreak.celular().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.celular().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }  
+                        </div>     
+                    }
+            </div>
+         </div>
+
+         <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <label for="financiacion" class="block mb-2">Financiación <span style="color: red;">*</span></label>
+                <select [formField]="formBreak.financiacion" class="w-full inputStyle" style="cursor: pointer;">
+                    <option value="">Seleccionar</option>
+                    <option value="PC">Plan máximas cuotas</option>
+                    <option value="PS50">Plan Smart 50</option>
+                    <option value="PS100">Plan Smart 100</option>
+                </select>
+                    @if (formBreak.financiacion().touched() && formBreak.financiacion().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.financiacion().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }  
+                        </div>     
+                    }
+            </div>
+            <div class="col-12 md:col-6">
+                <label for="instagram" class="block mb-2">Instagram</label>
+                <input 
+                    type="text" 
+                    placeholder="Instagram" 
+                    [formField]="formBreak.instagram" 
+                    class="w-full inputStyle" />
+            </div>
+         </div>
+         <div class="grid p-fluid">
+            <div class="col-12 md:col-6" >
+                <label for="nombreGrupo" class="block mb-2">Nombre del grupo <span style="color: red;">*</span></label>
+                <input 
+                    type="text" 
+                    placeholder="Nombre del grupo" 
+                    [formField]="formBreak.nombreGrupo" 
+                    class="w-full inputStyle" />
+                    @if (formBreak.nombreGrupo().touched() && formBreak.nombreGrupo().invalid()) {
+                        <div class="error-list">
+                            @for (error of formBreak.nombreGrupo().errors(); track error) {
+                                <p class="text-red-500">{{ error.message }}</p>
+                            }  
+                        </div>     
+                    }
+            </div>
+         </div>
+         <br>
+         <div class="grid p-fluid">
+            <div class="col-12 md:col-6">
+                <input type="checkbox" [(ngModel)]="terminosYCondiciones" name="terminos" id="terminos" style="cursor: pointer;">
+                <label for="terminos" class="ml-2">HE LEIDO EL CONTRATO Y LAS CONDICIONES GENERALES DEL MISMO ACEPTANDOLAS</label>
+            </div>
+         </div>
+
+         <!-- <p-button label="Enviar" [disabled]="formBreak().invalid() || !terminosYCondiciones()" class="enviarStyle"/> -->
+          <button type="submit" [disabled]="formBreak().invalid() || !terminosYCondiciones()" class="enviarStyle">Enviar</button>
+    </form>
+</p-card>
+
+<br>
+
+<div class="grid p-fluid">
+    <div class="col-12">
+        <p-button 
+            label="Volver a Inicio" 
+            icon="pi pi-home" 
+            severity="secondary"
+            [style]="{'width': '100%'}"
+            (click)="inicio()">
+        </p-button>
+    </div>
+</div>
+
+                

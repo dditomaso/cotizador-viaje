@@ -1,0 +1,219 @@
+<main class="main">
+  <div class="content">
+
+    <div class="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-xl">
+
+    <div class="col-12 backgroundColorHead">
+      <p-card header="¡Tu Verano 2027 en Brasil empieza hoy! 🇧🇷🌊">
+          <p class="font-bold">Asegurá tu lugar en el paraíso con la financiación más simple del mercado.</p>
+          <p>Sabemos que soñás con las olas de <span class="font-bold">Ferrugem</span>, los atardeceres mágicos de <span class="font-bold">Praia do Rosa</span> o la energía inigualable de <span class="font-bold">Canasvieiras</span>. Por eso, creamos este cotizador exclusivo para que armes el viaje a tu medida en solo dos pasos.</p>
+          <p class="font-bold">¿Por qué elegirnos para tu próxima aventura?</p>
+          <p><span class="font-bold">💳 Financiación Exclusiva (Sin Tarjeta):</span> Pagá en cuotas fijas y sin interés. Nosotros te financiamos directamente, sin bancos ni requisitos complicados.</p>
+          <p><span class="font-bold">📅 Planificá con Tiempo:</span> Tenés hasta un mes antes de tu salida para completar el pago. ¡Congelá el precio hoy y despreocupate!</p>
+          <p><span class="font-bold">🏨 Ubicación Privilegiada:</span> Olvidate de los traslados largos. Nuestras posadas son complejos de departamentos exclusivos, ubicados a solo <span class="font-bold">30-50 metros del mar</span> y del centro comercial.</p>
+          <p><span class="font-bold">✈️ Viajá como quieras:</span> Elegí entre la comodidad de nuestros vuelos desde Aeroparque/Ezeiza o la mística de nuestros micros con salidas desde el centro de CABA.</p>
+      </p-card>
+    </div>
+
+      
+        <h2 class="text-2xl font-bold mb-4 colorBreakRosa">Cotizador Break 2027</h2>
+  
+    <form [formGroup]="form" class="p-fluid">
+
+      <div class="grid p-fluid">
+          
+        <div class="col-12 md:col-6 field">
+          <label class="block font-medium">Destino</label>
+          <p-select [options]="destinos()" formControlName="destino" [editable]="false" optionLabel="nombre" optionValue="codigo" class="w-full md:w-56" placeholder="Seleccione un destino"/>
+         </div>
+
+         <div class="col-12 md:col-6 field">
+          <label class="block font-medium">Mes de Salida</label>
+          <p-select [options]="periodo" formControlName="mes" [editable]="false" optionLabel="mes" optionValue="codigo" class="w-full md:w-56" placeholder="Seleccione un mes de salida"/>
+
+          @if (form.get('mes')?.hasError('margenInsuficiente')) {
+            <p class="text-red-500 text-xs mt-2 font-semibold">
+              ⚠️ Ya no hay margen para financiar este mes. El pago total debe estar listo 30 días antes del viaje.
+            </p>
+          }
+        </div>
+
+      </div>
+
+      <div class="grid p-fluid">
+        <div class="col-12 md:col-6 field">
+          <label class="block font-medium">Traslado</label>
+          <p-select [options]="transporte" formControlName="traslado" [editable]="false" optionLabel="traslado" optionValue="codigo" class="w-full md:w-56" placeholder="Seleccione un traslado"/>
+        </div>
+
+        <div class="col-12 md:col-6 field">
+          <label class="block font-medium">Tipo de Paquete</label>
+          <p-select [options]="tipoPaquete" formControlName="paquete" [editable]="false" optionLabel="paquete" optionValue="codigo" class="w-full md:w-56" placeholder="Seleccione un paquete"/>
+        </div>
+      </div>
+
+      <div class="grid p-fluid">
+      
+      <div class="col-12 md:col-6 field">
+          <label class="block font-medium mb-1">Régimen:</label>
+          
+          <p-select 
+              formControlName="comidaExtra" 
+              [options]="opcionesComida()" 
+              optionLabel="label" 
+              optionValue="value"
+              placeholder="Selecciona un extra"
+              class="w-full md:w-56">
+          </p-select>
+
+          @if (formValue().paquete === 'Full') {
+              <small class="text-gray-500">Este paquete incluye todos los servicios de comida.</small>
+          }
+          @if (formValue().paquete === 'Flex') {
+              <small class="text-gray-500">Este paquete incluye desayuno.</small>
+          }
+      </div>
+      <div class="col-12 md:col-6 field">
+          <label class="block font-medium">Pasajeros</label>
+          <p-inputnumber formControlName="pasajeros" inputId="minmax" mode="decimal" [min]="1" [max]="100" [useGrouping]="false" style="display: flex;" />
+        </div>
+
+      </div>
+      
+    </form>
+
+    @if (form.valid) {
+      <p-card header="">
+        <div class="grid p-fluid">
+          <div class="col-12">
+            <span>Total: </span>
+            <span class="uppercase tracking-widest text-[10px] font-bold">USD ${{ montoPaqueteSeleccionado() | number }}</span> 
+            <span class=" text-[10px] text-gray-400 font-bold"> +</span>
+            <span class="text-gray-400 font-bold"> Reserva</span>
+          </div>
+          <div class="col-12">
+            <span>Pasajeros: </span>
+            <span class="uppercase tracking-widest text-[10px] font-bold"> {{ formValue().pasajeros | number}}</span> 
+          </div>
+          <div class="col-12">
+            <span>Reserva:</span>
+            <span class="uppercase tracking-widest text-[10px] font-bold"> ARS ${{ reserva() | number }}</span>
+            <span> pesos</span>
+          </div>
+          <div class="col-12">
+            <span class="uppercase tracking-widest text-[10px] font-bold"> {{ cuotasDisponibles() }} </span>
+            <span>Cuotas Fijas de</span>  
+            <span class="uppercase tracking-widest text-[10px] font-bold"> USD ${{ montoCuotaUSD() | number }} </span>
+            <span>dólares</span>
+          </div>
+        </div>
+      </p-card>
+    } @else {
+      <div class="grid p-fluid">
+        Completa los datos para ver el plan de pagos
+      </div>
+    }
+
+    <br>
+
+    <div class="grid p-fluid">
+      <div class="col-12">
+        <p-card header="Detalles del Paquete Seleccionado:">
+          @switch (formValue().paquete) {
+            @case ('ULC') { 
+              <div class="col-12">
+                <p><i class="pi pi-check-circle colorBreakRosa"></i> Tu Viaje a {{ formValue().destino }} en {{ formValue().traslado }}</p>
+                <p><i class="pi pi-check-circle colorBreakRosa"></i> Fecha {{ formValue().mes }} {{ ANIO_VIAJE }} </p>
+                <span class="text-[5px]">@if(formValue().traslado == 'micro'){Salidas todos los viernes}@else{Salidas todos los domingos}</span>
+                <p><i class="pi pi-check-circle colorBreakRosa"></i> 7 noches de alojamiento en posada</p>
+                <p><i class="pi pi-check-circle colorBreakRosa"></i> Asistencia médica</p>
+                <p><i class="pi pi-check-circle colorBreakRosa"></i> Coordinación</p>
+                @if (formValue().comidaExtra !== 'ninguna') {
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Regimen {{ formValue().comidaExtra }}</p>
+                }
+              </div> 
+            }
+            @case ('LC') {  
+              <div class="col-12">
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Tu Viaje a {{ formValue().destino }} en {{ formValue().traslado }}</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Fecha de salida {{ formValue().mes }} {{ ANIO_VIAJE }}</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> 7 noches de alojamiento en posada</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Asistencia médica</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Coordinación</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i>Servicios de playa</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Salidas nocturnas</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Fiesta de bienvenida y más</p>
+                  @if (formValue().comidaExtra !== 'ninguna') {<p><i class="pi pi-check-circle colorBreakRosa"></i> Regimen {{ formValue().comidaExtra }}</p>}
+              </div>  
+            }
+            @case ('Flex') { 
+              <div class="col-12">
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Tu Viaje a {{ formValue().destino }} en {{ formValue().traslado }}</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Fecha de salida {{ formValue().mes }} {{ ANIO_VIAJE }}</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> 7 noches de alojamiento en posada</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Asistencia médica</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Coordinación</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Servicios de playa</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i>Salidas nocturnas</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Fiesta de bienvenida y más</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Regimen desayuno
+                  @if (formValue().comidaExtra !== 'ninguna' && formValue().comidaExtra !== 'desayuno') {y {{ formValue().comidaExtra }}
+                    }
+                  </p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Incluye excursiones (Lagoinha, Brava, Santinho, Ingleses)</p>
+              </div>
+            }
+            @case ('Full') {  
+              <div class="col-12">
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Tu Viaje a {{ formValue().destino }} en {{ formValue().traslado }}</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Fecha de salida {{ formValue().mes }} {{ ANIO_VIAJE }}</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> 7 noches de alojamiento en posada</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Asistencia médica</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Coordinación</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Servicios de playa</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Salidas nocturnas</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Fiesta de bienvenida y más</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Regimen Media Pensión</p>
+                  <p><i class="pi pi-check-circle colorBreakRosa"></i> Excursiones completas (Lagoinha, Brava, Santinho, Ingleses,Guarda do Embau, Jureré) y Barco Pirata</p>
+                </div>
+            }
+          }
+        </p-card>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-3">
+      <button 
+        (click)="enviarCotizacion()"
+        [disabled]="form.invalid"
+        class="btn-whatsapp flex items-center justify-center gap-2">
+        <i class="pi pi-whatsapp"></i>
+        ENVIAR COTIZACIÓN POR WHATSAPP
+      </button>
+    </div>
+    <div class="col-12">
+      <span class=" text-[10px] text-gray-400 mt-2">Al hacer clic se abrirá tu WhatsApp con el resumen listo para enviar.</span>
+    </div>
+
+    <br>
+
+    <div class="grid p-fluid">
+        <div class="col-12">
+            <p-button 
+                label="Volver a Inicio" 
+                icon="pi pi-home" 
+                severity="secondary"
+                [style]="{'width': '100%'}"
+                (click)="inicio()">
+            </p-button>
+        </div>
+    </div>
+     
+  
+</div>
+
+    </div>
+</main>
+
+
+
